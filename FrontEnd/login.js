@@ -1,29 +1,33 @@
 async function login() {
-  const loginEmail = document.getElementById("email").value;
-  const loginpassword = document.getElementById("password").value;
-
-  const user = {
-    email: loginEmail,
-    password: loginpassword,
-  };
+  const loginForm = document.getElementById("connexion");
+  const loginButton = document.getElementById("submit");
+  const loginErrorMsg = document.getElementById("login-error-msg");
 
 
-    then((res) => {
-    if (res.ok) {
-      res.json()
-        .then((data) => {
-          const userdata = data.token;
-          if (localStorage.user = userdata)
-            document.location.href = ("edit.html");
-        })
+  await fetch("http://localhost:5678/api/users/login", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+
+  loginButton.addEventListener("click", connect());
+
+  function connect(){
+    const loginEmail = document.getElementById("email").value;
+    const loginMotDePasse = document.getElementById("motdePasse").value;
+    if (email === loginEmail  && motdePasse === loginMotDePasse) {
+      console.log(" you are in ");
     } else {
-      document.querySelector(".error").innerHTML = "L'identifiant ou/et le mot de passe est/sont incorrect";
-    }
-  });
-}
+      console.log("L'identifiant ou le mot de passe est/sont incorrect")
+    };
 
-const btnForm = document.querySelector(".connexion");
-btnForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  login();
-});
+    const user = {
+      email: loginEmail,
+      motdePasse: loginMotDePasse,
+    };
+
+  }
+}

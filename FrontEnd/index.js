@@ -1,17 +1,17 @@
 let works = []
-async function loadingImages() {
+
+async function showImages() {
   const reponse = await fetch("http://localhost:5678/api/works");
   const data = await reponse.json();
   works = data
-  newFunction(data)
-   mesfiltres()
+  mesfiltres()
 }
 
 //recupertation des pieces depuis fichier
-function newFunction(images) {
+function generateImages(images) {
   const gallery = document.getElementById("gallery");
   gallery.innerHTML = ""
- 
+
   //loop creation 
   for (let i = 0; i < images.length; i++) {
     //creations des balises
@@ -28,9 +28,7 @@ function newFunction(images) {
     gallery.appendChild(sectionFigure);
   }
 }
-// appel de la focntion pour montrer les images 
-window.onload = loadingImages
-// fin  pout faire apparaitre les projets 
+// appel de la focntion pour montrer les images  // fin  pout faire apparaitre les projets 
 
 //    FILTRES 
 function mesfiltres() {
@@ -39,74 +37,58 @@ function mesfiltres() {
   mesFiltres.id = "mes-filtres"
   const gallery = document.getElementById("gallery");
   gallery.parentElement.insertBefore(mesFiltres, gallery);
-  tous()
-  objects()
-  appartemnt()
-  hotel()
+  generateFiltres("Tous", "tous", 0, true);
+  generateFiltres("Objets", "objet", 1, false);
+  generateFiltres("Appartement", "appartement", 2, false);
+  generateFiltres("Hôtels & restaurants", "hotels", 3, false);
 }
 
-function tous() {
-  let divTous = document.createElement("div")
-  divTous.classList.add('filtres')
-  let divTousContent = document.createTextNode("Tous");
-  divTous.appendChild(divTousContent)
+function generateFiltres(nomFiltre, idFiltre, categoryID, filtreSelected) {
+  const filterDiv = document.createElement("div")
+  filterDiv.id = idFiltre
+  filterDiv.classList.add('filtres')
+  const filterDivContent = document.createTextNode(nomFiltre);
+  filterDiv.appendChild(filterDivContent)
   const mesFiltres = document.getElementById("mes-filtres");
-  mesFiltres.appendChild(divTous);
-  divTous.addEventListener("click", filtreTous);
-  function filtreTous() {
-    newFunction(works)
-    console.log(divTous)
-  }
-}
-
-function objects() {
-  let divObjets = document.createElement("div")
-  divObjets.classList.add('filtres')
-  let divObjetsContent = document.createTextNode("objects");
-  divObjets.appendChild(divObjetsContent)
-  const mesFiltres = document.getElementById("mes-filtres");
-  mesFiltres.appendChild(divObjets);
-  divObjets.addEventListener("click", filtreObjet);
-  function filtreObjet() {
-    const result = works.filter(work => work.category.id === 1)
-    newFunction(result)
-    console.log(divObjets)
-  }
-}
-
-function appartemnt() {
-  let divAppartements = document.createElement("div")
-  divAppartements.classList.add('filtres')
-  let divAppartementsContent = document.createTextNode("appartemnt");
-  divAppartements.appendChild(divAppartementsContent)
-  const mesFiltres = document.getElementById("mes-filtres");
-  mesFiltres.appendChild(divAppartements);
-  divAppartements.addEventListener("click", filtreAppartements);
-  function filtreAppartements() {
-    const result = works.filter(work => work.category.id === 2)
-    newFunction(result)
-    console.log(divAppartements)
-  }
-}
-
-function hotel() {
-  let divHotel = document.createElement("div")
-  divHotel.classList.add('filtres')
-  let divHotelContent = document.createTextNode("Hotel et restaurant");
-  divHotel.appendChild(divHotelContent)
-  const mesFiltres = document.getElementById("mes-filtres");
-  mesFiltres.appendChild(divHotel);
-  divHotel.addEventListener("click", filtreHotel);
-  function filtreHotel() {
-    const result = works.filter(work => work.category.id === 3)
-    newFunction(result)
-    console.log(divHotel)
+  mesFiltres.appendChild(filterDiv);
+  filterDiv.addEventListener("click", generateClickHandler(idFiltre, categoryID));
+  if (filtreSelected === true) {
+    activateFilter(idFiltre, categoryID)
   }
 }
 
 
-function mesFiltres(categorie) {
-  const result = works.filter(work => work.category.name === categorie)
+function generateClickHandler(filterID, categoryID) {
+  return function () {
+    activateFilter(filterID, categoryID)
+  }
 }
+function activateFilter(filterID, categoryID) {
+  const filtres = document.getElementsByClassName("filtres")
+  for (let i = 0; i < filtres.length; i++) {
+    const filtre = filtres[i]
+    filtre.classList.remove("filtres-active")
+  }
+  const filtreSelected = document.getElementById(filterID)
+  filtreSelected.classList.add("filtres-active")
+  if (categoryID === 0) {
+    generateImages(works)
+  }
+  else {
+    const result = works.filter(work => work.category.id === categoryID)
+    generateImages(result)
+  }
+}
+
+showImages()
+
+
+
+
+
+
+
+
+
 
 

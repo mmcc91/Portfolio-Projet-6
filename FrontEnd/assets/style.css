@@ -116,6 +116,22 @@ ul {
 	list-style: none;
 }
 
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+}
+nav li {
+	padding: 0 10px;
+	font-size: 1.2em;
+}
+nav li a {
+	color: #000;
+}
+nav li a:hover {
+	color: #B1663C;
+}
+
 blockquote,
 q {
 	quotes: none;
@@ -255,6 +271,10 @@ li:hover {
   color: #fff;
 }
 
+.filtres-active {
+	background: #1d6154;
+  color: #fff;
+}
 .gallery {
 	width: 100%;
 	display: grid;
