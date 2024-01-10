@@ -1,33 +1,42 @@
-async function login() {
-  const loginForm = document.getElementById("connexion");
-  const loginButton = document.getElementById("submit");
-  const loginErrorMsg = document.getElementById("login-error-msg");
 
+// Écouteur d'événement sur le formulaire de login
+const loginForm = document.getElementById('formulaireLogin');
+loginForm.addEventListener('submit', function (event) {
+  event.preventDefault(); // Empêche le rechargement de la page
 
-  await fetch("http://localhost:5678/api/users/login", {
-    method: "POST",
+  // Récupération des valeurs des champs d'entrée
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  // Vérification des valeurs
+  if (email.trim() === '' || password.trim() === '') {
+    alert('Veuillez remplir tous les champs');
+    return;
+  }
+  submitLogin(email, password)
+});
+
+async function submitLogin(email, password) {
+  const loginResponse = await fetch("http://localhost:5678/api/users/login", {
+    method: 'POST',
+    body: JSON.stringify({
+      email: email,
+      password: password
+    }),
     headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
+      'Content-Type': 'application/json'
+    }
   })
 
-  loginButton.addEventListener("click", connect());
-
-  function connect(){
-    const loginEmail = document.getElementById("email").value;
-    const loginMotDePasse = document.getElementById("motdePasse").value;
-    if (email === loginEmail  && motdePasse === loginMotDePasse) {
-      console.log(" you are in ");
-    } else {
-      console.log("L'identifiant ou le mot de passe est/sont incorrect")
-    };
-
-    const user = {
-      email: loginEmail,
-      motdePasse: loginMotDePasse,
-    };
-
+  if (loginResponse.ok) {
+    const data = await loginResponse.json();
+    //enregistre le login
+    localStorage.setItem("loginResponse", JSON.stringify(data));
+    //redirige vers la page index  plus tard page des modifications 
+    document.location.href = "index.html"
+  } else if (loginResponse.status === 404) {
+    alert("Utilisateur non trouve ")
+  } else if (loginResponse.status === 401) {
+    alert("Utilisateur non autorise")
   }
 }
+

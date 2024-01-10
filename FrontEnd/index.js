@@ -28,7 +28,7 @@ function generateImages(images) {
     gallery.appendChild(sectionFigure);
   }
 }
-// appel de la focntion pour montrer les images  // fin  pout faire apparaitre les projets 
+// fin  pout faire apparaitre les projets 
 
 //    FILTRES 
 function mesfiltres() {
