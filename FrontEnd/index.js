@@ -57,7 +57,6 @@ function generateFiltres(nomFiltre, idFiltre, categoryID, filtreSelected) {
   }
 }
 
-
 function generateClickHandler(filterID, categoryID) {
   return function () {
     activateFilter(filterID, categoryID)

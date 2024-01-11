@@ -404,5 +404,24 @@ footer nav ul {
 	justify-content: center;
 }
 
-/*  MODAL    MODAL    MODAL   MODAL   MODAL   MODAL   MODAL  MODAL    MODAL    MODAL    MODAL    MODAL    MODAL */
-.modal1
+/*  MODAL    MODAL    MODAL   MODAL   MODAL   MODAL   MODAL  MODAL    MODAL    MODAL    MODAL    MODAL    MODAL */   /**/   /**/
+.modal1{
+	position: fixed; /* prend lentierete de lecran*/
+	top:0 ;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.09);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	display: none;/* naffiche pas la boite modal */
+}
+.modal-wrapper{
+	overflow: auto;/* contenu peut depasser si ecran trop petit*/
+	width: 400px;
+	max-width: calc(100vw - 20px);/* 1 fois la largeur de lecran - 20 px pour laisser de la marge */
+	max-height: calc(100vh - 20px);
+	background-color: #fff;
+	padding: 20px;
+}
