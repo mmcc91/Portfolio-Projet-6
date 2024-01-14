@@ -415,7 +415,8 @@ footer nav ul {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	display: none;/* naffiche pas la boite modal */
+	display: none; /* naffiche pas la boite modal */
+	animation: fadeIn 3s both;
 }
 .modal-wrapper{
 	overflow: auto;/* contenu peut depasser si ecran trop petit*/
@@ -424,4 +425,24 @@ footer nav ul {
 	max-height: calc(100vh - 20px);
 	background-color: #fff;
 	padding: 20px;
+}
+
+*:focus{
+	box-shadow: 0 0 10px blue; /* box shadow sur tu les elements focus */
+}
+
+.modal[aria-hidden=true]{ /* sur la modal qui a latribue arria hiden true alors on passe lanimation fade out*/
+animation: fadeout 3s ;
+}
+@keyframes fadeIn {
+	from{opacity: 0;
+		transform: scale(0);}
+	to {opacity: 1;
+		transform: scale(1);}
+}
+@keyframes fadeout {
+	from{opacity: 1;
+	transform: scale(1);}
+	to {opacity: 0;
+		transform: scale(0);}
 }
