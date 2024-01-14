@@ -69,3 +69,17 @@ window.addEventListener("keydown", function (e) {
         focusInModale(e)
     }
 })
+
+// Doit etre fait pouur le site 
+// Fonctions pour gérer l'affichage et la fermeture de la modale.
+// Active/désactive la visibilité de la modale.
+// MAJ du contenu de la modale avec les projets existants.
+// Ouvre la modale.
+// Cliquer pour fermer la modale
+// Cliquer pour ajouter une photo (ouvrir le formulaire)
+// Cliquer pour annuler l'ajout d'une photo (fermer le formulaire et revenir à la modal galerie)
+// Gestion de l'upload d'image.
+// FORMULAIRE D'AJOUT DE PROJET
+// Valide les entrees 
+//API
+// LIEN COURS https://grafikart.fr/tutoriels/modal-javascript-css-72
