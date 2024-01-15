@@ -17,7 +17,7 @@ const openModal = function (e) {// functiom  qui prend en parametre levenement e
 }
 
 
-// creation de la fonction qui prend en paramettre levenement  
+// creation de la fonction qui prend en paramettre levenement  FERME LA MODAL
 const closeModal = function (e) {
     if (modal === null) return
     if (previouslyFocusElement !== null) previouslyFocusElement.focus()
