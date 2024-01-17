@@ -451,23 +451,47 @@ footer nav ul {
 	display: none;
 	/*   naffiche pas la boite modal */
 	animation: fadeIn 3s both;
+	
 }
 
 .modalModifier {
-	display:hidden;
+	display: hidden;
 	overflow: auto;
 	/* contenu peut depasser si ecran trop petit*/
-	width: 400px;
-	max-width: calc(100vw - 20px);
+	/* max-width: calc(100vw - 20px); */
 	/* 1 fois la largeur de lecran - 20 px pour laisser de la marge */
-	max-height: calc(100vh - 20px);
+	/* max-height: calc(100vh - 20px); */
 	background-color: #fff;
 	padding: 20px;
-
-	flex-direction: column;
 	justify-content: space-around;
 	position: relative;
+	width: 660px;
+	height: 405px;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	box-sizing:content-box;
 }
+
+.modifierModal {
+	display: grid;
+	width: 10px;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 10px;
+
+}
+
+
+.modifierModal > figure >span > img{
+width: 50px;
+height: 150px;
+}
+
+.modifierModal > figure >span > i{
+	position: absolute;
+	width: 10px;
+	}
 
 /*.modifierModal {}*/
 
@@ -497,12 +521,6 @@ button:hover {
 	right: 20px;
 	cursor: pointer;
 
-}
-
-
-.containerModals img {
-	width: 25%;
-    height: 25%;
 }
 
 *:focus {
