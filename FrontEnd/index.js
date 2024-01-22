@@ -90,6 +90,20 @@ const modeEdition = document.querySelector(' header .mode-edition');
 const croiX = document.querySelector(".containerModals .fa-x")
 const modifierModal = document.querySelector(".modifierModal")
 
+const modalModifier = document.querySelector(".modalModifier")
+// pour la 2nd modal ajout des photos
+const buttonAddPhoto = document.querySelector(".modalModifier button")
+const modalAjoutPhoto = document.querySelector(".modalAjoutPhoto")
+
+//Variables Pour le form
+const formAjoutPhoto = document.querySelector("#formAjoutPhoto");
+const labelFile = document.querySelector("#formAddWorks label")
+const paragraphFile = document.querySelector("#formAjoutWorks p")
+const inputTitle = document.querySelector("#title");
+const inputCategory = document.querySelector("#categoryInput");
+const inputFile = document.querySelector("#file");
+const previewImage = document.getElementById("previewImage");
+
 
 if (loged != undefined) {  // si loged est diferent de non defini alors on retourne  le mode admin 
   logout.textContent = "logout";
@@ -160,11 +174,12 @@ function supressionImage(images, containerId) {
       let imagesId = sectionFigure.getAttribute("images-id") // recupere un numero d'id
       const loged = localStorage.getItem("loginResponse");
       const detail = JSON.parse(loged)
-      await fetch("http://localhost:5678/api/works/" + imagesId, {
-        method: "DELETE", headers: {
-          Authorization: `Bearer ${detail.token}`,
-          "Content-Type": "application/json",
-        },
+      await fetch('http://localhost:5678/api/works/' + imagesId, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${detail.token}`,
+          'Content-Type': 'application/json',
+        }, // essaye try catch pour recupere les erreurs
       })
       console.log("delete completed")
       showImages()
@@ -177,5 +192,48 @@ function supressionImage(images, containerId) {
 }
 
 
+// changenemnt affiche modal en clik sur ajout 
+function afficheModalAjoutPhoto() {
+  buttonAddPhoto.addEventListener("click", () => {
+    modalAjoutPhoto.style.display = "flex";
+    containerModals.style.display = "none";
+  })
+}
 
+function retourModal() {
+  const arrowLeftModalWorks = document.querySelector(".modalAjoutphoto .fa-arrow-left")
+  }
 
+  //Function d'ajout d'un nouveau projet
+function ajoutPhoto() {
+  formAjoutPhoto.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Récupération des Valeurs du Formulaire
+    const formData = new FormData(formAjoutPhoto);
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur lors de l'envoi du fichier");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // console.log("Fichier envoyé avec succès :", data);
+        generateImagesModal();
+        showImages();
+        formAjoutPhoto.reset();
+        modalModifier.style.display =  "none";
+        modalAjoutPhoto.style.display = "flex";
+        previewImage.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Erreur :", error);
+      });
+  });
+}
