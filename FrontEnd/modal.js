@@ -18,12 +18,12 @@ const loged = localStorage.getItem("loginResponse"); // permet de mettre uniquem
 
 const logout = document.querySelector("header nav #login");
 const containerModals = document.querySelector(".containerModals"); // jenregistre dans ma variable am class
-const modeEdition = document.querySelector(" header .mode-edition");
-const croiX = document.querySelector(".modalModifier .fa-x");
+const modeEdition = document.querySelector(" .mode-edition");
+const croiX = document.querySelector(".modalGallerySupression .fa-x");
 const modifierModal = document.querySelector(".modifierModal"); //div vide dans la premiere modal
-const modalModifier = document.querySelector(".modalModifier"); // premiere modal
+const modalGallerySupression = document.querySelector(".modalGallerySupression"); // premiere modal
 // pour la 2nd modal ajout des photos
-const buttonAddPhoto = document.querySelector(".modalModifier button");
+const buttonAddPhoto = document.querySelector(".modalGallerySupression button");
 const modalAjoutPhoto = document.querySelector(".modalAjoutPhoto"); //2nd modal pour ajout des photos
 const croiX2 = document.querySelector(".modalAjoutPhoto .fa-x");
 const arrowLeftAjoutPhoto = document.querySelector(".modalAjoutPhoto .fa-arrow-left"); // pour fleche retour
@@ -49,7 +49,7 @@ if (loged != undefined) {
 //affiche modal en clik sur modeEdition de la barre noir
 modeEdition.addEventListener("click", () => {
   containerModals.style.display = "flex";
-  modalModifier.style.display = "flex";
+  modalGallerySupression.style.display = "flex";
   modalAjoutPhoto.style.display = "none";
 });
 
@@ -60,8 +60,6 @@ croiX.addEventListener("click", () => {
 
 //Fermuture de la modal2 sur la croix 2 Ajout ohoto modal
 croiX2.addEventListener("click", () => {
-  //Supréssion de la prewiew a clik sur retour dans la modale
-  inputFile.value = "";
   previewImage.style.display = "none";
   containerModals.style.display = "none";
 });
@@ -70,14 +68,14 @@ croiX2.addEventListener("click", () => {
 buttonAddPhoto.addEventListener("click", () => {
   modalAjoutPhoto.style.display = "flex";
   containerModals.style.display = "flex";
-  modalModifier.style.display = "none";
+  modalGallerySupression.style.display = "none";
 });
 
 // click sur la fleche pour le retour sur la modal precedente
 
 arrowLeftAjoutPhoto.addEventListener("click", () => {
   containerModals.style.display = "flex";
-  modalModifier.style.display = "flex";
+  modalGallerySupression.style.display = "flex";
   modalAjoutPhoto.style.display = "none";
 });
 
@@ -165,7 +163,7 @@ formAjoutPhoto.addEventListener("submit", (e) => {
       // console.log("Fichier envoyé avec succès :", data);
       showImages();
       formAjoutPhoto.reset();
-      modalModifier.style.display = "none";
+      modalGallerySupression.style.display = "none";
       modalAjoutPhoto.style.display = "flex";
     })
     .catch((error) => {

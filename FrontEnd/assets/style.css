@@ -408,30 +408,24 @@ footer nav ul {
 
 /* MODE EDITION     display: none; */
 .mode-edition {
-	font-family: 'Work Sans';
-
 	flex-direction: row;
+	position: sticky;
+	box-sizing: border-box;
+	display: flex;
 	justify-content: center;
 	align-items: center;
+	column-gap: 25px;
+	gap: 20px;
+	padding: 10px;
 	width: 100%;
+	height: 50px;
 	background-color: black;
 	color: #fff;
-	gap: 20px;
-	height: 50px;
-	position: absolute;
 	top: 0;
 	left: 0;
 }
 
 
-
-.logo-edition {
-	display: flex;
-	flex-direction: row;
-	color: #FFFFFF;
-	font-size: 16px;
-	gap: 10px;
-}
 
 
 /*  MODAL    MODAL    MODAL   MODAL   MODAL   MODAL   MODAL  MODAL    MODAL    MODAL    MODAL    MODAL    MODAL */
@@ -445,7 +439,6 @@ footer nav ul {
 	width: 100%;
 	height: 100%;
 	background: rgba(179, 9, 9, 0.9);
-	display: flex;
 	align-items: center;
 	justify-content: center;
 	display: none;
@@ -454,31 +447,40 @@ footer nav ul {
 
 }
 
-.modalModifier {
+/* 1er modal avec la supression     */
+.modalGallerySupression {
 	display: hidden;
+	display: flex;
 	overflow: auto;
 	/* contenu peut depasser si ecran trop petit*/
 	/* max-width: calc(100vw - 20px); */
 	/* 1 fois la largeur de lecran - 20 px pour laisser de la marge */
 	/* max-height: calc(100vh - 20px); */
-	display: flex;
 	flex-direction: column;
 	align-items: center;
 	background-color: white;
 	border-radius: 5px;
 	padding: 35px;
 	width: 40%;
-	height: 46%;
+	height: 56%;
 	position: relative;
-	
+
 }
 
-.modalModifier H2 {
+
+.modalGallerySupression .fa-x {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
+
+.modalGallerySupression H2 {
 	color: black;
 	font-weight: 400;
 }
 
-
+/*  partie regroupant la gallery de la modal de supression   */
 .modifierModal {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -492,24 +494,25 @@ footer nav ul {
 }
 
 .modifierModal>figure>span>img {
-	width: 79px;
-	height: 100px;
+	width: 70px;
+	height: 90px;
 }
 
 .modifierModal>figure>span>i {
 	position: absolute;
-
 }
- .modifierModal  button {
-	position: relative;
-	bottom: 1%;
+
+.modalGallerySupression .button-ajout-photo {
+	justify-content: center;
+	align-items: center;
 	display: flex;
- }
+	bottom: 10px;
+	position: absolute;
+}
 
 /*.modifierModal {}*/
-.previewImage {
-	max-width: 30px;
-}
+
+
 button {
 	border: 1px #1d6154 solid;
 	border-radius: 60px;
@@ -522,6 +525,8 @@ button {
 	text-align: center;
 	padding: 3px 20px;
 	cursor: pointer;
+	justify-content: center;
+	align-items: center;
 }
 
 button:hover {
@@ -529,13 +534,7 @@ button:hover {
 	color: #fff;
 }
 
-.modalModifier .fa-x {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	cursor: pointer;
 
-}
 
 *:focus {
 	box-shadow: 0 0 10px blue;
@@ -547,46 +546,64 @@ button:hover {
 	animation: fadeout 3s;
 }
 
+
+hr {
+	border: none;
+	color: #B3B3B3;
+	width: 100%;
+	border: 1px solid #B3B3B3;
+	position: relative;
+	bottom: 0;
+}
+
+
 /* AOUT PHOTO*/
 .modalAjoutPhoto {
 	display: none;
+	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
-
 	background-color: white;
-
-width: 40%;
-	background-color: white;
+	width: 40%;
 	border-radius: 5px;
 	padding: 35px;
-	height: 46%;
+	height: 55%;
+	object-fit: contain;
 }
 
-.modalAjoutPhoto .arrow-left {
-	position: absolute;
+.modalAjoutPhoto .button-ajout-photo {
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	bottom: 10px;
+
+}
+
+.premierligne {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: -webkit-fill-available;
+}
+
+.premierligne .fa-arrow-left {
 	top: 30px;
-	left: 15px;
-}
-
-.modalAjoutPhoto .arrow-left .fa-arrow-left {
 	font-size: 1.5rem;
 	cursor: pointer;
+	display: flex;
 }
 
-.modalAjoutPhoto .xmark {
-	position: absolute;
-	top: 30px;
-	right: 15px;
-}
-
-.modalAjoutPhoto .x .fa-x {
-	font-size: 1.5rem;
+.premierligne .fa-x {
+	top: 20px;
+	right: 20px;
 	cursor: pointer;
+
 }
 
-.modalAjoutPhotos h3 {
-	margin-top: 60px;
+
+
+.modalAjoutPhoto h3 {
 	font-weight: bold;
 	font-size: 1.5rem;
 }
@@ -606,7 +623,7 @@ width: 40%;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 30%;
+	height: 200px;
 	background-color: #e8f1f6;
 	gap: 10px;
 }
@@ -636,44 +653,7 @@ width: 40%;
 	cursor: pointer;
 }
 
-
-.modalAjoutPhotos form .containerAddPhoto {
-	display: flex;
-	position: relative;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	height: 30%;
-	background-color: #e8f1f6;
-	gap: 10px;
-}
-
-.modalAjoutPhoto form .containerAddPhoto img {
-	display: none;
-	max-width: 100%;
-	height: 100%;
-	z-index: 2;
-	position: absolute;
-}
-
-.modalAjoutPhoto form .containerAddPhoto .fa-image {
-	font-size: 4rem;
-	color: #b9c5cc;
-}
-
-.modalAjoutPhoto form .containerAddPhoto .labelFile {
-	display: block;
-	display: flex;
-	align-items: center;
-	background-color: #b9c5cc;
-	border-radius: 15px;
-	height: 30px;
-	padding: 0 20px;
-	color: #306685;
-	cursor: pointer;
-}
-
-.modalAjoutPhoto form .containerAddPhoto input {
+.modalAjoutPhoto form .containerAjoutPhoto input {
 	opacity: 0;
 }
 
@@ -687,6 +667,10 @@ width: 40%;
 	height: 8%;
 }
 
+.previewImage {
+	max-width: 30px;
+}
+
 .modalAjoutPhoto form .container-button-ajout-photo {
 	display: flex;
 	justify-content: center;
@@ -696,15 +680,16 @@ width: 40%;
 	border-top: 1px solid gray;
 }
 
-.modalAjoutPhoto form .container-button-ajout-photo .buttonValidForm {
+.modalAjoutPhoto form .container-button-ajout-photo {
 	background-color: #1d6154;
 	padding: 9px 50px;
 	border-radius: 25px;
 	color: white;
 	font-weight: 700;
 	font-size: 1rem;
-	font-family: Syne;
+
 	cursor: pointer;
+
 }
 
 .modalAjoutPhoto form .container-button-ajout-photo .button-ajout-photo {
@@ -714,8 +699,10 @@ width: 40%;
 	color: white;
 	font-weight: 700;
 	font-size: 1rem;
-	font-family: Syne;
+
 	cursor: pointer;
+	justify-content: center;
+	align-items: center;
 }
 
 .modalAjoutPhoto form .container-button-ajout-photo .button-ajout-photo:hover {
