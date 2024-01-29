@@ -29,13 +29,15 @@ const croiX2 = document.querySelector(".modalAjoutPhoto .fa-x");
 const arrowLeftAjoutPhoto = document.querySelector(".modalAjoutPhoto .fa-arrow-left"); // pour fleche retour
 //Variables Pour le form
 const formAjoutPhoto = document.querySelector("#formAjoutPhoto");
-const labelFile = document.querySelector("#formAddWorks label");
+const labelFile = document.querySelector(".labelFile");
 const paragraphFile = document.querySelector("#formAjoutWorks p");
 const inputTitle = document.querySelector("#title");
 const inputCategory = document.querySelector("#categoryInput");
-const inputFile = document.querySelector("#file");
+const inputFile = document.querySelector("#image");
 const previewImage = document.getElementById("previewImage");
-const imageInput =document.getElementById("image")
+const imageInput = document.getElementById("image")
+const previewImageDiv = document.querySelector(".previewImageDiv")
+const containerAjoutPhoto = document.querySelector(".containerAjoutPhoto")
 
 if (loged != undefined) {
   // si loged est diferent de non defini alors on retourne  le mode admin
@@ -125,7 +127,7 @@ function supressionImage(images, containerId) {
       let sectionFigure = poubelle.parentElement.parentElement;
       let imagesId = sectionFigure.getAttribute("images-id"); // recupere un numero d'id
       const detail = JSON.parse(loged);
-      await fetch("http://localhost:5678/api/works/" + imagesId, {
+      await fetch(`http://localhost:5678/api/works/${imagesId}`, {   // `${interpolation}` remplace le +
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${detail.token}`,
@@ -144,13 +146,18 @@ formAjoutPhoto.addEventListener("submit", (e) => {
   e.preventDefault();
   // Récupération des Valeurs du Formulaire
   const formData = new FormData(formAjoutPhoto);
+
+  for (let info of formData.entries()) {
+    console.log(info[0] + "," + info[1])
+  }
+
   const detail = JSON.parse(loged);
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     body: formData,
     headers: {
       Authorization: `Bearer ${detail.token}`,
-      
+
     },
   })
     .then((response) => {
@@ -193,25 +200,27 @@ async function displayCategoryModal() {
 }
 displayCategoryModal();
 
-//fonction prévisualisation de l'image
-function prevImg() {
-  inputFile.addEventListener("change", () => {
-    const file = inputFile.files[0];
-    // console.log(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        previewImage.src = e.target.result;
-        previewImage.style.display = "block";
-        // labelFile.style.display ="none"
-        // paragraphFile.style.display ="none"
-      };
-      reader.readAsDataURL(file);
-    } else {
-      previewImage.style.display = "none";
+//fonction prévisualisation de l'image a lajout dams la modal  https://www.tutorialspoint.com/preview-an-image-before-it-is-uploaded-in-javascript
+
+
+function previewSelectedImage() {
+  const file = imageInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function (e) {
+      previewImage.src = e.target.result;
+      previewImageDiv.style.display = "block";
+      containerAjoutPhoto.style.display = "none"
+
     }
-  });
+    reader.readAsDataURL(file);
+
+     
+  }
 }
+imageInput.addEventListener('change', previewSelectedImage);
+
 
 // fontion qui vérifie si tout les inputs sont remplis
 function verifFormCompleted() {
@@ -228,22 +237,22 @@ function verifFormCompleted() {
 }
 // previe 
 function imagePreviewDisplay() {
-    imageInput.addEventListener('change',(e) => { // : Ajoute un écouteur d'événements qui réagit au changement dans le champ d'entrée de fichier.
-      const file = imageInput.files[0]; //Récupère le premier fichier sélectionné par l'utilisateur.
+  imageInput.addEventListener('change', (e) => { // : Ajoute un écouteur d'événements qui réagit au changement dans le champ d'entrée de fichier.
+    const file = imageInput.files[0]; //Récupère le premier fichier sélectionné par l'utilisateur.
 
-      if (file) {//Vérifie si un fichier a été sélectionné.
-        const reader = new FileReader(); // : Crée une instance de l'objet FileReader qui permet de lire le contenu du fichier.
+    if (file) {//Vérifie si un fichier a été sélectionné.
+      const reader = new FileReader(); // : Crée une instance de l'objet FileReader qui permet de lire le contenu du fichier.
 
-        reader.onload = function(e) { //Configure une fonction à exécuter lorsque la lecture du fichier est terminée.
-          const imageUrl = e.target.result;//Récupère l'URL de données généré à partir du contenu du fichier.
-          previewImage.src= imageUrl;
-        };//Affiche l'image en tant que prévisualisation dans la div en utilisant un élément <img> avec l'URL de données. Les styles CSS limitent la largeur à 100% et la hauteur à 200 pixels.
+      reader.onload = function (e) { //Configure une fonction à exécuter lorsque la lecture du fichier est terminée.
+        const imageUrl = e.target.result;//Récupère l'URL de données généré à partir du contenu du fichier.
+        previewImage.src = imageUrl;
+      };//Affiche l'image en tant que prévisualisation dans la div en utilisant un élément <img> avec l'URL de données. Les styles CSS limitent la largeur à 100% et la hauteur à 200 pixels.
 
-        reader.readAsDataURL(file); //Lit le contenu du fichier en tant qu'URL de données.
-      } else {
-        previewImage.innerHTML = ''; // Si aucun fichier n'est sélectionné, vide la div de prévisualisation.
-      }
-    });
+      reader.readAsDataURL(file); //Lit le contenu du fichier en tant qu'URL de données.
+    } else {
+      previewImage.innerHTML = ''; // Si aucun fichier n'est sélectionné, vide la div de prévisualisation.
+    }
+  });
 }
 
 imagePreviewDisplay()

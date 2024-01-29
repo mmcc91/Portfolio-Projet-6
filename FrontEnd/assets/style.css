@@ -562,7 +562,7 @@ hr {
 	display: none;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 	background-color: white;
 	width: 40%;
@@ -623,6 +623,7 @@ hr {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
 	height: 200px;
 	background-color: #e8f1f6;
 	gap: 10px;
@@ -668,7 +669,8 @@ hr {
 }
 
 .previewImage {
-	max-width: 30px;
+	max-width: 100%;
+	max-height: 85%;
 }
 
 .modalAjoutPhoto form .container-button-ajout-photo {
@@ -711,6 +713,10 @@ hr {
 	color: #1d6154;
 }
 
+
+.previewImageDiv{
+	display: none;
+}
 
 
 
