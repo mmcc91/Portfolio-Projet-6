@@ -30,7 +30,6 @@ async function submitLogin(email, password) {
   if (loginResponse.ok) {
     const data = await loginResponse.json();
     //enregistre le login
-    // a remettre peut etre si en dessous ne marche pas 
     localStorage.setItem("loginResponse", JSON.stringify(data)) ;
     //redirige vers la page index  plus tard page des modifications 
     document.location.href = "index.html"

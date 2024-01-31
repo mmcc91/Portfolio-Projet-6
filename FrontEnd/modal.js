@@ -74,7 +74,6 @@ buttonAddPhoto.addEventListener("click", () => {
 });
 
 // click sur la fleche pour le retour sur la modal precedente
-
 arrowLeftAjoutPhoto.addEventListener("click", () => {
   containerModals.style.display = "flex";
   modalGallerySupression.style.display = "flex";
@@ -201,26 +200,21 @@ async function displayCategoryModal() {
 displayCategoryModal();
 
 //fonction prévisualisation de l'image a lajout dams la modal  https://www.tutorialspoint.com/preview-an-image-before-it-is-uploaded-in-javascript
-
-
 function previewSelectedImage() {
-  const file = imageInput.files[0];
+  const file = imageInput.files[0];//Récupère le premier fichier sélectionné par l'utilisateur.
   if (file) {
-    const reader = new FileReader();
-    
-    reader.onload = function (e) {
-      previewImage.src = e.target.result;
-      previewImageDiv.style.display = "block";
+    const reader = new FileReader();// : Crée une instance de l'objet FileReader qui permet de lire le contenu du fichier.
+
+    reader.onload = function (e) {//Configure une fonction à exécuter lorsque la lecture du fichier est terminée.
+      const imageUrl = e.target.result;//Récupère l'URL de données généré à partir du contenu du fichier. 209
+      previewImage.src = imageUrl;//Affiche l'image en tant que prévisualisation dans la div en utilisant un élément <img> avec l'URL de données. 
+      previewImageDiv.style.display = "flex";
       containerAjoutPhoto.style.display = "none"
-
     }
-    reader.readAsDataURL(file);
-
-     
+    reader.readAsDataURL(file);//Lit le contenu du fichier en tant qu'URL de données.
   }
 }
-imageInput.addEventListener('change', previewSelectedImage);
-
+imageInput.addEventListener('change', previewSelectedImage);// : Ajoute un écouteur d'événements qui réagit au changement dans le champ d'entrée de fichier.
 
 // fontion qui vérifie si tout les inputs sont remplis
 function verifFormCompleted() {
@@ -235,24 +229,3 @@ function verifFormCompleted() {
     }
   });
 }
-// previe 
-function imagePreviewDisplay() {
-  imageInput.addEventListener('change', (e) => { // : Ajoute un écouteur d'événements qui réagit au changement dans le champ d'entrée de fichier.
-    const file = imageInput.files[0]; //Récupère le premier fichier sélectionné par l'utilisateur.
-
-    if (file) {//Vérifie si un fichier a été sélectionné.
-      const reader = new FileReader(); // : Crée une instance de l'objet FileReader qui permet de lire le contenu du fichier.
-
-      reader.onload = function (e) { //Configure une fonction à exécuter lorsque la lecture du fichier est terminée.
-        const imageUrl = e.target.result;//Récupère l'URL de données généré à partir du contenu du fichier.
-        previewImage.src = imageUrl;
-      };//Affiche l'image en tant que prévisualisation dans la div en utilisant un élément <img> avec l'URL de données. Les styles CSS limitent la largeur à 100% et la hauteur à 200 pixels.
-
-      reader.readAsDataURL(file); //Lit le contenu du fichier en tant qu'URL de données.
-    } else {
-      previewImage.innerHTML = ''; // Si aucun fichier n'est sélectionné, vide la div de prévisualisation.
-    }
-  });
-}
-
-imagePreviewDisplay()

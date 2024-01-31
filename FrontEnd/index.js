@@ -12,8 +12,10 @@ async function showImages() { // fonction pour montrer les images
 function generateImages(images, containerId) {
   const gallery = document.getElementById(containerId);
   gallery.innerHTML = ""
+
   //loop creation 
   for (let i = 0; i < images.length; i++) {
+    
     //creations des balises
     const article = images[i];
     const imageElement = document.createElement("img");
