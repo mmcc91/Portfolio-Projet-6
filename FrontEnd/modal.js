@@ -71,6 +71,9 @@ buttonAddPhoto.addEventListener("click", () => {
   modalAjoutPhoto.style.display = "flex";
   containerModals.style.display = "flex";
   modalGallerySupression.style.display = "none";
+  imageInput.value=""  // fait le reset du formulaire 
+  containerAjoutPhoto.style.display = "flex" // affiche le container pour lajout 
+  
 });
 
 // click sur la fleche pour le retour sur la modal precedente
@@ -97,7 +100,7 @@ function generateImagesModal(images, containerId) {
     sectionFigure.setAttribute("images-id", article.id); // cree un numero d'id
 
     const figCaptionElement = document.createElement("figCaption"); // je cree figcaption
-    figCaptionElement.innerText = article.title;
+    // figCaptionElement.innerText = article.title; naffiche pas le texte en dessous 
 
     const span = document.createElement("span"); //je cree  span
 
@@ -115,29 +118,49 @@ function generateImagesModal(images, containerId) {
   supressionImage();
 }
 
+
 //supression   https://www.youtube.com/watch?v=Qkna4uD_qcQ
 //Supression des works grace a la méthode DELETE & au Token user depuis la poubelle de la modale
-//Objet de paramétrage pour requette DELETE avec token
+//Objet de paramétrage pour requette DELETE avec token  ajout de try catch 1.2.24
 
 function supressionImage(images, containerId) {
   const poubelle = document.querySelectorAll(".fa-trash-can");
   poubelle.forEach((poubelle) => {
     poubelle.addEventListener("click", async (e) => {
-      let sectionFigure = poubelle.parentElement.parentElement;
-      let imagesId = sectionFigure.getAttribute("images-id"); // recupere un numero d'id
-      const detail = JSON.parse(loged);
-      await fetch(`http://localhost:5678/api/works/${imagesId}`, {   // `${interpolation}` remplace le +
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${detail.token}`,
-          "Content-Type": "application/json",
-        }, // essaye try catch pour recupere les erreurs
-      });
-      console.log("delete completed");
-      showImages();
+      try {
+        let sectionFigure = poubelle.parentElement.parentElement;
+        let imagesId = sectionFigure.getAttribute("images-id"); // recupere un numero d'id
+        const detail = JSON.parse(loged);
+        const response = await fetch(`http://localhost:5678/api/works/${imagesId}`, {   // `${interpolation}` remplace le +
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${detail.token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Erreur lors de la suppression de l'image");
+        }
+        console.log("Suppression terminée avec succès");
+
+       // Ajouter cette ligne pour montrer la modal suppression photo après la suppression réussie
+            // containerModals.style.display = "flex";
+            //  modalGallerySupression.style.display = "flex";
+        // showImages();
+        showImages()
+      } catch (error) {
+        console.error("Erreur lors de la suppression de l'image :", error);
+      }
     });
   });
 }
+
+// const reponse = await fetch("http://localhost:5678/api/categories");
+// const data = await reponse.json();
+// return data;
+// }
+
+
 
 //Function d'ajout d'un nouveau projet
 
@@ -167,10 +190,11 @@ formAjoutPhoto.addEventListener("submit", (e) => {
     })
     .then((data) => {
       // console.log("Fichier envoyé avec succès :", data);
-      showImages();
-      formAjoutPhoto.reset();
-      modalGallerySupression.style.display = "none";
-      modalAjoutPhoto.style.display = "flex";
+    location.reload()
+      // showImages();
+      // formAjoutPhoto.reset();
+      // modalGallerySupression.style.display = "none";
+      // modalAjoutPhoto.style.display = "flex";
     })
     .catch((error) => {
       console.error("Erreur :", error);
@@ -209,23 +233,10 @@ function previewSelectedImage() {
       const imageUrl = e.target.result;//Récupère l'URL de données généré à partir du contenu du fichier. 209
       previewImage.src = imageUrl;//Affiche l'image en tant que prévisualisation dans la div en utilisant un élément <img> avec l'URL de données. 
       previewImageDiv.style.display = "flex";
-      containerAjoutPhoto.style.display = "none"
+      containerAjoutPhoto.style.display = "none";
     }
     reader.readAsDataURL(file);//Lit le contenu du fichier en tant qu'URL de données.
   }
 }
 imageInput.addEventListener('change', previewSelectedImage);// : Ajoute un écouteur d'événements qui réagit au changement dans le champ d'entrée de fichier.
 
-// fontion qui vérifie si tout les inputs sont remplis
-function verifFormCompleted() {
-  const buttonValidForm = document.querySelector(".container-button-ajout-photo  button");
-  formAddWorks.addEventListener("input", () => {
-    if (!inputTitle.value == "" && !inputFile.files[0] == "") {
-      buttonValidForm.classList.remove("button-ajout-photo");
-      buttonValidForm.classList.add("buttonValidForm");
-    } else {
-      buttonValidForm.classList.remove("buttonValidForm");
-      buttonValidForm.classList.add("button-ajout-photo");
-    }
-  });
-}
