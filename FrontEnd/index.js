@@ -4,7 +4,7 @@ async function showImages() { // fonction pour montrer les images
   const reponse = await fetch("http://localhost:5678/api/works");
   const data = await reponse.json();
   works = data
-  mesfiltres()
+   mesfiltres() 
   generateImagesModal(works, "modifier")
 }
 
@@ -12,10 +12,8 @@ async function showImages() { // fonction pour montrer les images
 function generateImages(images, containerId) {
   const gallery = document.getElementById(containerId);
   gallery.innerHTML = ""
-
   //loop creation 
   for (let i = 0; i < images.length; i++) {
-    
     //creations des balises
     const article = images[i];
     const imageElement = document.createElement("img");
@@ -30,15 +28,17 @@ function generateImages(images, containerId) {
     gallery.appendChild(sectionFigure);
   }
 }
-// fin  pout faire apparaitre les projets 
-
 //    FILTRES 
 function mesfiltres() {
+  const existingMesFiltres = document.getElementById('mes-filtres') // permet de ne pas afficher en plusieurs fois les filtres 
+  if (existingMesFiltres ){
+    existingMesFiltres.remove()
+  }
   let mesFiltres = document.createElement("div")
   mesFiltres.classList.add("mesfiltres")
   mesFiltres.id = "mes-filtres"
   const gallery = document.getElementById("gallery");
-  gallery.parentElement.insertBefore(mesFiltres, gallery);
+  gallery.parentElement.insertBefore(mesFiltres, gallery); // position des filtres avant la gallery 
   generateFiltres("Tous", "tous", 0, true);
   generateFiltres("Objets", "objet", 1, false);
   generateFiltres("Appartement", "appartement", 2, false);

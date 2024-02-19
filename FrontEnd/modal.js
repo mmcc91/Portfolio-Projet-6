@@ -14,7 +14,7 @@
 
 //  SO Utilisateur ok / connecte  ------------------------------------------------------------SI LOGIN ---------------------------------------------------------------------------------------
 
-const loged = localStorage.getItem("loginResponse"); // permet de mettre uniquement si utilisateur connecte /connect les deux pages
+let loged = localStorage.getItem("loginResponse"); // permet de mettre uniquement si utilisateur connecte /connect les deux pages
 
 const logout = document.querySelector("header nav #login");
 const containerModals = document.querySelector(".containerModals"); // jenregistre dans ma variable am class
@@ -42,9 +42,14 @@ const containerAjoutPhoto = document.querySelector(".containerAjoutPhoto")
 if (loged != undefined) {
   // si loged est diferent de non defini alors on retourne  le mode admin
   logout.textContent = "logout";
+  modeEdition.style.display = "flex";
   logout.addEventListener("click", () => {
     // au click se deconnect
-    logout.removeEventListener("click", false);
+    console.log("logout")
+
+    modeEdition.style.display = "none";
+    localStorage.clear("loginResponse");
+    loged = undefined
   });
 }
 
@@ -62,8 +67,9 @@ croiX.addEventListener("click", () => {
 
 //Fermuture de la modal2 sur la croix 2 Ajout ohoto modal
 croiX2.addEventListener("click", () => {
-  previewImage.style.display = "none";
   containerModals.style.display = "none";
+  previewImageDiv.style.display = "none";
+  containerAjoutPhoto.style.display = "flex";
 });
 
 // changenemnt affiche modal  ajout photo en clik sur ajout enleve la supprimer
@@ -71,9 +77,9 @@ buttonAddPhoto.addEventListener("click", () => {
   modalAjoutPhoto.style.display = "flex";
   containerModals.style.display = "flex";
   modalGallerySupression.style.display = "none";
-  imageInput.value=""  // fait le reset du formulaire 
+  imageInput.value = ""  // fait le reset du formulaire 
   containerAjoutPhoto.style.display = "flex" // affiche le container pour lajout 
-  
+
 });
 
 // click sur la fleche pour le retour sur la modal precedente
@@ -143,10 +149,6 @@ function supressionImage(images, containerId) {
         }
         console.log("Suppression terminée avec succès");
 
-       // Ajouter cette ligne pour montrer la modal suppression photo après la suppression réussie
-            // containerModals.style.display = "flex";
-            //  modalGallerySupression.style.display = "flex";
-        // showImages();
         showImages()
       } catch (error) {
         console.error("Erreur lors de la suppression de l'image :", error);
@@ -155,20 +157,13 @@ function supressionImage(images, containerId) {
   });
 }
 
-// const reponse = await fetch("http://localhost:5678/api/categories");
-// const data = await reponse.json();
-// return data;
-// }
-
 
 
 //Function d'ajout d'un nouveau projet
-
 formAjoutPhoto.addEventListener("submit", (e) => {
   e.preventDefault();
   // Récupération des Valeurs du Formulaire
   const formData = new FormData(formAjoutPhoto);
-
   for (let info of formData.entries()) {
     console.log(info[0] + "," + info[1])
   }
@@ -190,11 +185,7 @@ formAjoutPhoto.addEventListener("submit", (e) => {
     })
     .then((data) => {
       // console.log("Fichier envoyé avec succès :", data);
-    location.reload()
-      // showImages();
-      // formAjoutPhoto.reset();
-      // modalGallerySupression.style.display = "none";
-      // modalAjoutPhoto.style.display = "flex";
+      location.reload()
     })
     .catch((error) => {
       console.error("Erreur :", error);
